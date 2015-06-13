@@ -15,3 +15,7 @@ gem "tzinfo-data", platforms: [:mswin, :mingw, :jruby]
 
 gem "slim"
 gem "sass"
+
+group :development, :test do
+  gem 'jasmine'
+end

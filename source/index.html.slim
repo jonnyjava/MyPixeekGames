@@ -2,7 +2,7 @@
   .table
     h1.header MYPIXEEK
     - for i in (1..49)
-      .led id="#{i}" class="color#{(i/2)}"
+      .led id="#{i}" class="color#{(i/2)} js_memogame"
         | #{i}
       - if((i%7)==0)
         br
