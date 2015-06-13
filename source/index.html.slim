@@ -1,2 +1,8 @@
-h1 poldo
-p e adesso mi diverto
+.game
+  .table
+    h1.header MYPIXEEK
+    - for i in (1..49)
+      .led id="#{i}" class="color#{(i/2)}"
+        | #{i}
+      - if((i%7)==0)
+        br
