@@ -1,24 +1,18 @@
-describe("A suite", function() {
-  it("contains spec with an expectation", function() {
-    expect(true).toBe(true);
-  });
-});
-
-describe("Button Click Event Tests", function() {
+describe("initializing the game", function() {
   beforeEach(function() {
     jasmine.getFixtures().fixturesPath = '/__spec__/fixtures';
     loadFixtures("memogame.html");
-    memo = new MemoGame('.js_memogame');
-    size = 48;
+    randomLedNumber = 48;
+    memo = new MemoGame('.js_memogame', randomLedNumber);
   });
 
-  it("should be in DOM", function(){
+  it("led1 should be in DOM", function(){
     expect($('#led1')[0]).toBeInDOM();
   });
 
   it("should fill the pairMatrix",function(){
     memo.buildMatrix();
-    expect(memo.pairMatrix.length).toEqual(size);
+    expect(memo.pairMatrix.length).toEqual(randomLedNumber);
     for(var i = 0; i<memo.pairMatrix.length; i++){
       var destination = memo.pairMatrix[i];
       expect(memo.pairMatrix[destination]).toEqual(i);

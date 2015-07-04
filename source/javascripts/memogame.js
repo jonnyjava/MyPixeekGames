@@ -1,5 +1,5 @@
-var MemoGame = function(DOMidentifier){
-  this.ledMatrixSize = 49,
+var MemoGame = function(DOMidentifier, ledNumber){
+  this.ledMatrixSize = ledNumber,
   this.DOMidentifier = DOMidentifier,
   this.pairMatrix = [],
 
