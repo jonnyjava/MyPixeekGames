@@ -1,47 +1,67 @@
-var MemoGame = function(identifier){
-  this.name = "poldo",
-  this.identifier = identifier,
+var MemoGame = function(DOMidentifier){
+  this.ledMatrixSize = 49,
+  this.DOMidentifier = DOMidentifier,
   this.pairMatrix = [],
 
   this.init = function(){
     var memo = this;
-    memo.buildPairMatrix();
-    $(memo.identifier).click(function(){
+    memo.buildMatrix();
+    if((memo.ledMatrixSize%2) != 0){
+      memo.addJoker();
+    }
+    $(memo.DOMidentifier).click(function(){
       memo.saluta();
     });
   },
 
-  this.saluta = function(){
-    alert('poldo');
-  },
-
-  this.buildPairMatrix = function(){
+  this.buildMatrix = function(){
     var memo = this;
     var tempArray = [];
 
-    for(var i = 0; i<48; i++){
+    var elementsAmount = memo.ledMatrixSize;
+    if((memo.ledMatrixSize%2) != 0){
+      elementsAmount--;
+    }
+
+    for(var i = 0; i < elementsAmount; i++){
       tempArray[i] = i;
-      this.pairMatrix[i] = null;
     }
 
     while(tempArray.length >= 0){
-      var firstNumber = tempArray[memo.randomizer(tempArray.length - 1)];
-      var secondNumber = tempArray[memo.randomizer(tempArray.length - 1)];
-
-      if (firstNumber != secondNumber){
-        this.pairMatrix[firstNumber] = secondNumber;
-        this.pairMatrix[secondNumber] = firstNumber;
-        tempArray.splice(tempArray.indexOf(firstNumber),1);
-        tempArray.splice(tempArray.indexOf(secondNumber),1);
-      }
+      memo.pairKeyWithValue(tempArray);
       if(tempArray.length == 0){
         break;
       }
     }
   },
 
-  this.randomizer = function(size){
-    var randomNumber = (Math.floor(Math.random() * (size - 0 + 1)) + 0);
+  this.pairKeyWithValue = function(tempArray){
+    var memo = this;
+    var firstNumber = tempArray[memo.randomizer(tempArray.length - 1)];
+    var secondNumber = tempArray[memo.randomizer(tempArray.length - 1)];
+    if (firstNumber != secondNumber){
+      memo.pairMatrix[firstNumber] = secondNumber;
+      memo.pairMatrix[secondNumber] = firstNumber;
+      tempArray.splice(tempArray.indexOf(firstNumber), 1);
+      tempArray.splice(tempArray.indexOf(secondNumber), 1);
+    }
+  },
+
+  this.randomizer = function(length){
+    var randomNumber = (Math.floor(Math.random() * (length + 1)) + 0);
     return randomNumber;
+  },
+
+  this.addJoker = function(){
+    var memo = this;
+    var jokerPosition = memo.randomizer(memo.pairMatrix.length);
+    var oldDestination = memo.pairMatrix[jokerPosition];
+    memo.pairMatrix[memo.pairMatrix.length] = oldDestination;
+    memo.pairMatrix[oldDestination] = memo.pairMatrix.length - 1;
+    memo.pairMatrix[jokerPosition] = 'joker';
+  },
+
+  this.saluta = function(){
+    alert('poldo');
   }
 };
